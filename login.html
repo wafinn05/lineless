@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LineLess — Buat Akun</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --text: #333333;
+      --muted: #8a827a;
+      --surface-2: #F2F2F2;
+      --accent: #7A1E27;
+      --cream: #FFF3E6;
+    }
+
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+    }
+
+    /* ---------- Page backdrop (blurred cafe) ---------- */
+    .page {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 18px;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: -30px;
+      background: url('cafe.png') center/cover no-repeat;
+      filter: blur(26px) brightness(.85);
+      transform: scale(1.1);
+      z-index: 0;
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 243, 230, .28);
+      z-index: 0;
+    }
+
+    /* ---------- Card ---------- */
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 34px;
+      overflow: hidden;
+      box-shadow: 0 40px 90px rgba(0, 0, 0, .3);
+    }
+
+    .card-top {
+      position: relative;
+      background: url('cafe.png') center/cover no-repeat;
+      min-height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 28px 44px;
+    }
+
+    .card-top::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(122, 30, 39, .55), rgba(0, 0, 0, .45));
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .2);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, .25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      transition: background .2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, .32);
+    }
+
+    .back-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .card-top h1 {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      font-size: clamp(28px, 7vw, 34px);
+      font-weight: 700;
+      line-height: 1.12;
+      text-align: center;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, .3);
+    }
+
+    .card-body {
+      position: relative;
+      z-index: 1;
+      margin-top: -26px;
+      background: #fff;
+      border-radius: 30px 30px 0 0;
+      padding: 30px 26px 30px;
+    }
+
+    /* ---------- Google button ---------- */
+    .g-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #fff;
+      border: 1px solid #e4e2df;
+      border-radius: 30px;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s, box-shadow .2s;
+    }
+
+    .g-btn:hover {
+      background: #faf9f7;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .06);
+    }
+
+    .g-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .or {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 18px 0;
+    }
+
+    /* ---------- Fields ---------- */
+    .fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1.5px solid transparent;
+      border-radius: 15px;
+      padding: 15px 18px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+
+    .field::placeholder {
+      color: #a49b91;
+    }
+
+    .field:focus {
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    .pw {
+      display: flex;
+      align-items: center;
+      background: var(--surface-2);
+      border: 1.5px solid transparent;
+      border-radius: 15px;
+      transition: border-color .2s, background .2s;
+    }
+
+    .pw:focus-within {
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    .pw input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--text);
+      padding: 15px 0 15px 18px;
+    }
+
+    .pw input::placeholder {
+      color: #a49b91;
+    }
+
+    .pw button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 18px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+    }
+
+    .pw button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ---------- Submit ---------- */
+    .submit {
+      width: 100%;
+      margin-top: 20px;
+      background: #333333;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 18px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+
+    .submit:hover {
+      background: #1a1a1a;
+    }
+
+    .submit:active {
+      transform: scale(.99);
+    }
+
+    /* ---------- Footer text ---------- */
+    .terms {
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+
+    .terms a,
+    .login-link a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+    }
+
+    .login-link {
+      text-align: center;
+      font-size: 14.5px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    /* hide scrollbar (page still scrolls if needed) */
+    html {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ---------- Tablet / desktop: give the card a touch more room ---------- */
+    @media (min-width: 520px) {
+      .card {
+        max-width: 440px;
+      }
+
+      .card-body {
+        padding: 32px 32px 32px;
+      }
+    }
+
+    /* ---------- Mobile: tighten everything so it fits & reads well ---------- */
+    @media (max-width: 480px) {
+      .page {
+        padding: 0;
+        align-items: stretch;
+      }
+
+      .card {
+        max-width: none;
+        width: 100%;
+        min-height: 100vh;
+        min-height: 100dvh;
+        border-radius: 0;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-body {
+        flex: 1;
+      }
+
+      .card-top {
+        min-height: 34vh;
+        padding: 44px 24px 40px;
+      }
+
+      .card-body {
+        padding: 24px 20px 24px;
+      }
+
+      .g-btn {
+        padding: 13px;
+        font-size: 14.5px;
+        gap: 10px;
+      }
+
+      .or {
+        margin: 14px 0;
+      }
+
+      .fields {
+        gap: 10px;
+      }
+
+      .row2 {
+        gap: 10px;
+      }
+
+      .field,
+      .pw input {
+        padding: 14px 15px;
+        font-size: 14.5px;
+      }
+
+      .pw input {
+        padding-right: 0;
+      }
+
+      .field::placeholder,
+      .pw input::placeholder {
+        font-size: 14px;
+      }
+
+      .submit {
+        padding: 16px;
+        font-size: 15px;
+        margin-top: 18px;
+      }
+
+      .terms {
+        margin-top: 16px;
+      }
+
+      .login-link {
+        margin-top: 16px;
+      }
+    }
+
+    /* ---------- Very small phones: stack the name fields ---------- */
+    @media (max-width: 360px) {
+      .row2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="card-top">
+        <a href="index.html" class="back-btn" aria-label="Kembali">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M15 5 L8 12 L15 19" />
+          </svg>
+        </a>
+        <h1>Buat<br />Akun</h1>
+      </div>
+
+      <div class="card-body">
+        <button class="g-btn" onclick="location.href='pilih-restoran.html'">
+          <svg viewBox="0 0 48 48">
+            <path fill="#EA4335"
+              d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+            <path fill="#4285F4"
+              d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+            <path fill="#FBBC05"
+              d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+            <path fill="#34A853"
+              d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+          </svg>
+          Daftar dengan Google
+        </button>
+
+        <div class="or">atau</div>
+
+        <form class="fields" onsubmit="location.href='pilih-restoran.html';return false;">
+          <div class="row2">
+            <input class="field" type="text" placeholder="Nama depan" required />
+            <input class="field" type="text" placeholder="Nama belakang" required />
+          </div>
+          <input class="field" type="email" placeholder="Email" required />
+          <div class="pw">
+            <input id="pw" type="password" placeholder="Kata sandi" required />
+            <button type="button" onclick="togglePw()" aria-label="Lihat sandi">
+              <svg id="pwIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
+
+          <button class="submit" type="submit">Buat Akun</button>
+        </form>
+
+        <p class="terms">Dengan mendaftar akun LineLess, kamu menyetujui
+          <a href="#">Kebijakan Privasi</a> dan <a href="#">Ketentuan Layanan</a>.
+        </p>
+
+        <p class="login-link">Sudah punya akun? <a href="pilih-restoran.html">Masuk di sini</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePw() {
+      const pw = document.getElementById("pw");
+      const icon = document.getElementById("pwIcon");
+      const showing = pw.type === "text";
+      pw.type = showing ? "password" : "text";
+      icon.innerHTML = showing
+        ? '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>'
+        : '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/>';
+    }
+  </script>
+</body>
+
+</html>

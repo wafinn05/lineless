@@ -1,0 +1,51 @@
+/* ============================================================
+   LineLess design tokens
+   Palette is the locked brand palette — one accent (wine),
+   coral reserved for live/favorite highlights, amber for status.
+   Radius scale: pill = interactive, 16 = cards, 20 = featured,
+   28 = sheets/overlays. Shadows are warm-tinted, never pure black.
+   ============================================================ */
+:root {
+  /* surfaces */
+  --bg: #fff3e6;
+  --surface: #ffffff;
+  --surface-2: #f2f2f2;
+  --surface-warm: #faf5ee;
+
+  /* ink — never pure black */
+  --text: #333333;
+  --muted: #6f645b;
+  --line: #ece2d3;
+
+  /* brand */
+  --accent: #7a1e27;
+  --accent-deep: #611620;
+  --accent-soft: #a12734;
+  --accent-2: #ff6b6b;
+  --amber: #ffc857;
+  --amber-ink: #a9741a;
+  --dark: #333333;
+
+  /* type */
+  --font-sans: "Outfit Variable", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Consolas,
+    monospace;
+
+  /* radius scale */
+  --r-pill: 999px;
+  --r-card: 16px;
+  --r-featured: 20px;
+  --r-sheet: 28px;
+
+  /* warm-tinted elevation (light source: top) */
+  --shadow-1: 0 2px 10px rgba(74, 44, 22, 0.06);
+  --shadow-2: 0 10px 30px rgba(74, 44, 22, 0.09);
+  --shadow-3: 0 18px 44px rgba(74, 44, 22, 0.14);
+  --shadow-accent: 0 14px 30px rgba(122, 30, 39, 0.24);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 180ms;
+  --dur-med: 320ms;
+  --dur-slow: 600ms;
+}

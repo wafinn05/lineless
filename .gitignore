@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.local
+
+# local tooling — installed design skills, not part of the app
+.agents/
+skills-lock.json
